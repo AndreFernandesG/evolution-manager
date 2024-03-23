@@ -203,37 +203,35 @@ export default {
     },
 
     // METODO PARA LISTAGEM DE GRUPOS:
-    async loadGroups() {
-      try {
-        this.loadingGroups = true; // Define loadingGroups para true antes de carregar os grupos
-        this.error = false;
+async loadGroups() {
+  try {
+    this.loadingGroups = true; // Define loadingGroups para true antes de carregar os grupos
+    this.error = false;
 
-        const groups = await instanceController.group.getAll(
-          this.instance.instance.instanceName
-        );
+    const groups = await instanceController.group.getAll(
+      this.instance.instance.instanceName
+    ).then(groups => groups.filter(g => g.announce === false)
+    );
 
-        const groupsPhotos = {};
+    const groupsPhotos = {};
 
-        // Filtra os grupos onde apenas os administradores podem enviar mensagens:
-        const filteredGroups = groups.filter((g) => !g.announce);
-
-        // Mapeia os grupos filtrados para o formato desejado:
-        this.groups = filteredGroups.map((g) => {
-          groupsPhotos[g.id] = g.profilePictureUrl;
-          return {
-            title: g.subject,
-            value: g.id,
-            photo: groupsPhotos[g.id],
-            isGroup: true,
-          };
-        });
-      } catch (error) {
-        console.error('Erro ao carregar grupos:', error);
-        this.error = true;
-      } finally {
-        this.loadingGroups = false; // Define loadingGroups para false após o término do carregamento ou em caso de erro
-      }
-    },
+    // Mapeia os grupos filtrados para o formato desejado
+    this.groups = groups.map((g) => {
+      groupsPhotos[g.id] = g.profilePictureUrl;
+      return {
+        title: g.subject,
+        value: g.id,
+        photo: groupsPhotos[g.id],
+        isGroup: true,
+      };
+    });
+  } catch (error) {
+    console.error('Erro ao carregar grupos:', error);
+    this.error = true;
+  } finally {
+    this.loadingGroups = false; // Define loadingGroups para false após o término do carregamento ou em caso de erro
+  }
+},
 
     // Método para selecionar todos os grupos:
     selectAll() {
