@@ -214,7 +214,11 @@ export default {
 
         const groupsPhotos = {};
 
-        this.groups = groups.map((g) => {
+        // Filtra os grupos onde apenas os administradores podem enviar mensagens:
+        const filteredGroups = groups.filter((g) => !g.announce);
+
+        // Mapeia os grupos filtrados para o formato desejado:
+        this.groups = filteredGroups.map((g) => {
           groupsPhotos[g.id] = g.profilePictureUrl;
           return {
             title: g.subject,
