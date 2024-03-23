@@ -210,7 +210,7 @@ async loadGroups() {
 
     const groups = await instanceController.group.getAll(
       this.instance.instance.instanceName
-    ).then(groups => groups.filter(g => g.announce === false)
+    ).then(groups => groups.filter(g => g.announce === true)
     );
 
     const groupsPhotos = {};
