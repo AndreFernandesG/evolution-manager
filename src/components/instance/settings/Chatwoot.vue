@@ -1,5 +1,5 @@
-<!--
 <template>
+<!--
   <v-card variant="outlined" :loading="loading">
     <v-card-title
       class="d-flex align-center"
@@ -246,9 +246,11 @@
     </v-card-actions>
   </v-card>
   <chatwoot-config :instance="instance" ref="chatwootConfig" />
+-->
 </template>
 
 <script>
+/*
 import ChatwootConfig from "@/components/modal/ChatwootConfig.vue";
 import instanceController from "@/services/instanceController";
 import { useAppStore } from "@/store/app";
@@ -360,7 +362,8 @@ export default {
   },
   components: { ChatwootConfig },
 };
+*/
 </script>
 
-<style></style>
--->
+<style>
+</style>
