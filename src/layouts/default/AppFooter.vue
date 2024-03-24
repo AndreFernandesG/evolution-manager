@@ -1,4 +1,5 @@
 <template>
+<!--
   <v-footer absolute app class="mt-10">
     <div class="d-flex flex-grow-1 flex-wrap gap-y-1 align-end">
       <div class="flex-shrink-0 d-flex gap-2 align-center">
@@ -42,9 +43,11 @@
   </v-footer>
   <Contribute ref="contribute" />
   <About ref="about" />
+-->
 </template>
 
 <script>
+/*
 import About from "@/components/modal/About.vue";
 import Contribute from "@/components/modal/Contribute.vue";
 import { version } from "../../../package.json";
@@ -85,6 +88,8 @@ export default {
   },
   components: { Contribute, About },
 };
+*/
 </script>
 
-<style></style>
+<style>
+</style>
