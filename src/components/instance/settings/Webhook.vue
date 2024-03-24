@@ -1,4 +1,5 @@
 <template>
+<!--
   <v-card variant="outlined" :loading="loading">
     <v-card-title
       class="d-flex align-center"
@@ -98,9 +99,11 @@
       </v-btn>
     </v-card-actions>
   </v-card>
+-->
 </template>
 
 <script>
+/*
 import instanceController from "@/services/instanceController";
 import EventsSelect from "@/components/global/EventsSelect.vue";
 export default {
@@ -183,6 +186,8 @@ export default {
     },
   },
 };
+*/
 </script>
 
-<style></style>
+<style>
+</style>
