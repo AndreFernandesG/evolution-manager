@@ -1,4 +1,5 @@
 <template>
+<!--
   <v-card variant="outlined" :loading="loading">
     <v-card-title
       class="d-flex align-center"
@@ -209,9 +210,11 @@
     @refresh="loadTypebot"
     ref="typebotSessions"
   />
+-->
 </template>
 
 <script>
+/*
 import TypebotSessions from "@/components/modal/TypebotSessions.vue";
 import instanceController from "@/services/instanceController";
 const defaultObj = () => ({
@@ -314,6 +317,8 @@ export default {
   },
   components: { TypebotSessions },
 };
+*/
 </script>
 
-<style></style>
+<style>
+</style>
