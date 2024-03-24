@@ -48,6 +48,7 @@
             >
               <v-icon>mdi-logout</v-icon>
             </v-btn>
+            -->
             <!-- <v-btn
               v-if="AppStore.validConnection"
               class="ml-0"
@@ -57,6 +58,7 @@
             >
               Cancel
             </v-btn> -->
+            <!--
             <v-btn
               v-if="AppStore.validConnection"
               class="ml-0"
