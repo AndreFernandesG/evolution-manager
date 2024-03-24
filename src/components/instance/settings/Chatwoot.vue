@@ -1,3 +1,4 @@
+<!--
 <template>
   <v-card variant="outlined" :loading="loading">
     <v-card-title
@@ -362,3 +363,4 @@ export default {
 </script>
 
 <style></style>
+-->
