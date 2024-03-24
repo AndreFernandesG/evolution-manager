@@ -30,6 +30,8 @@
           {{ Array.isArray(error) ? error.join(", ") : error }}
         </v-alert>
       </v-card-text>
+
+      <!--
       <v-card-actions>
         <div class="d-flex flex-wrap justify-space-between w-100 align-center">
           <v-btn size="small" text @click="showAbout">
@@ -79,6 +81,8 @@
           </div>
         </div>
       </v-card-actions>
+      -->
+      
     </v-card>
 
     <v-card class="mt-2" v-if="connectionsList && connectionsList.length > 1">
