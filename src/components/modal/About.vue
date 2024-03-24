@@ -1,4 +1,5 @@
 <template>
+<!--
   <v-dialog v-model="dialog" max-width="600px" scrollable>
     <v-card>
       <v-card-text>
@@ -49,9 +50,11 @@
     </v-card>
   </v-dialog>
   <contribute ref="contribute" />
+-->
 </template>
 
 <script>
+/*
 import Contribute from "./Contribute.vue";
 import { version } from "../../../package.json";
 export default {
@@ -71,4 +74,5 @@ export default {
   },
   components: { Contribute },
 };
+*/
 </script>
