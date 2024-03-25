@@ -31,12 +31,15 @@
         </v-alert>
       </v-card-text>
 
-      <!--
-      <v-card-actions>
+        <v-card-actions>
         <div class="d-flex flex-wrap justify-space-between w-100 align-center">
+
+          <!--
           <v-btn size="small" text @click="showAbout">
             {{ $t("about.title") }}
           </v-btn>
+          -->
+
           <div class="d-flex justify-end flex-grow-1 gap-1">
             <v-btn
               v-if="!!AppStore.connection.host"
@@ -48,7 +51,7 @@
             >
               <v-icon>mdi-logout</v-icon>
             </v-btn>
-            -->
+            
             <!-- <v-btn
               v-if="AppStore.validConnection"
               class="ml-0"
@@ -58,7 +61,7 @@
             >
               Cancel
             </v-btn> -->
-            <!--
+            
             <v-btn
               v-if="AppStore.validConnection"
               class="ml-0"
@@ -83,7 +86,6 @@
           </div>
         </div>
       </v-card-actions>
-      -->
       
     </v-card>
 
