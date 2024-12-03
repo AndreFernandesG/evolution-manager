@@ -4,118 +4,83 @@
       <v-card-title>{{ $t("sendMessage.title") }}</v-card-title>
       <v-card-text>
         <v-form v-model="valid">
-          <v-autocomplete
-            v-model="numbers"
-            multiple
-            chips
-            :label="$t('sendMessage.to')"
-            :loading="loadingContacts"
-            :items="contacts"
-            v-model:search="search"
-          >
-            <template v-slot:no-data>
-              <v-list-item
-                v-if="search"
-                @click="addAndSelect"
-                :title="search"
-              ></v-list-item>
-              <v-list-item
-                v-else
-                :title="$t('sendMessage.noContacts')"
-              ></v-list-item>
+
+          <!-- TRECHO QUE LISTA E PERMITE ESCOLHER OS CONTATOS: -->
+          <v-autocomplete v-model="numbers" multiple chips :label="$t('sendMessage.to')" :loading="loadingGroups"
+            :items="groups" v-model:search="search">
+
+            <!-- Selecionar todos os Grupos: -->
+            <template v-slot:prepend-item>
+              <v-list-item @click="selectAll" :title="$t('Selecionar Todos')">
+                <v-list-item-action>
+                  <v-icon>mdi-checkbox-multiple-marked</v-icon>
+                </v-list-item-action>
+              </v-list-item>
             </template>
+
+            <template v-slot:no-data>
+              <v-list-item v-if="search" @click="addAndSelect" :title="search"></v-list-item>
+              <v-list-item v-else :title="$t('sendMessage.noGroups')"></v-list-item>
+            </template>
+
             <template v-slot:chip="{ item }">
               <v-chip class="d-flex gap-1 align-center">
                 <v-avatar size="20">
-                  <v-img
-                    height="20"
-                    width="20"
-                    v-if="item?.raw?.photo"
-                    :src="item?.raw?.photo"
-                  />
-                  <v-icon size="20" v-else>
-                    mdi-{{ item?.raw?.isGroup ? "account-group" : "account" }}
+                  <v-img height="20" width="20" v-if="item.photo" :src="item.photo" />
+                  <v-icon size="20">
+                    mdi-account-group
                   </v-icon>
                 </v-avatar>
 
                 <span class="ml-2">
-                  {{ item.raw.title }}
+                  {{ item.title }}
                 </span>
               </v-chip>
             </template>
+
             <template v-slot:item="{ props, item }">
               <v-list-item v-bind="props" :title="null">
                 <div class="d-flex align-center gap-1">
                   <v-avatar size="36">
-                    <v-img
-                      height="36"
-                      width="36"
-                      v-if="item?.raw?.photo"
-                      :src="item?.raw?.photo"
-                    />
-                    <v-icon size="36" v-else>
-                      mdi-{{ item?.raw?.isGroup ? "account-group" : "account" }}
+                    <v-img height="36" width="36" v-if="item.photo" :src="item.photo" />
+                    <v-icon size="36">
+                      mdi-account-group
                     </v-icon>
                   </v-avatar>
                   <div>
-                    <p>{{ item?.raw?.title }}</p>
-                    <p class="text-disabled font-8">{{ item?.raw?.value }}</p>
+                    <p>{{ item.title }}</p>
+                    <p class="text-disabled font-8">{{ item.value }}</p>
                   </div>
                 </div>
               </v-list-item>
             </template>
           </v-autocomplete>
 
-          <v-textarea
-            v-model="message.textMessage.text"
-            :label="$t('sendMessage.message')"
-            outlined
-            dense
-            :rules="[
-              (v) => !!v || 'Mensagem é obrigatória',
-              (v) =>
-                v.length <= 1024 ||
-                'Mensagem deve ter no máximo 1024 caracteres',
-            ]"
-            :counter="1024"
-            :disabled="loading"
-            rows="3"
-            class="mb-3"
-          ></v-textarea>
+
+          <v-textarea v-model="message.textMessage.text" :label="$t('sendMessage.message')" outlined dense :rules="[
+    (v) => !!v || 'Mensagem é obrigatória',
+    (v) =>
+      v.length <= 1024 ||
+      'Mensagem deve ter no máximo 1024 caracteres',
+  ]" :counter="1024" :disabled="loading" rows="3" class="mb-3"></v-textarea>
 
           <div class="d-flex gap-2">
-            <v-select
-              v-model="message.options.presence"
-              :items="[
-                'composing',
-                'available',
-                'active',
-                'unavailable',
-                'paused',
-              ]"
-              density="compact"
-              :label="$t('sendMessage.presence')"
-              :rules="[
-                (v) =>
-                  !!v || $t('required', { field: $t('sendMessage.presence') }),
-              ]"
-              :disabled="loading"
-              class="mb-3"
-            ></v-select>
-            <v-text-field
-              v-model="message.options.delay"
-              type="number"
-              :label="$t('sendMessage.delay')"
-              density="compact"
-              :hint="`${$t('sendMessage.delayHint')}
-            (${(message.options.delay / 1000).toFixed(1)} segundos)`"
-              :rules="[
-                (v) =>
-                  !!v || $t('required', { field: $t('sendMessage.delay') }),
-              ]"
-              :disabled="loading"
-              class="mb-3"
-            ></v-text-field>
+            <v-select v-model="message.options.presence" :items="[
+    'composing',
+    'available',
+    'active',
+    'unavailable',
+    'paused',
+  ]" density="compact" :label="$t('sendMessage.presence')" :rules="[
+    (v) =>
+      !!v || $t('required', { field: $t('sendMessage.presence') }),
+  ]" :disabled="loading" class="mb-3"></v-select>
+            <v-text-field v-model="message.options.delay" type="number" :label="$t('sendMessage.delay')"
+              density="compact" :hint="`${$t('sendMessage.delayHint')}
+            (${(message.options.delay / 1000).toFixed(1)} segundos)`" :rules="[
+    (v) =>
+      !!v || $t('required', { field: $t('sendMessage.delay') }),
+  ]" :disabled="loading" class="mb-3"></v-text-field>
           </div>
         </v-form>
 
@@ -129,16 +94,10 @@
       </v-card-text>
       <v-card-actions>
         <v-btn text @click="dialog = false" :disabled="loading">{{
-          $t("close")
-        }}</v-btn>
+    $t("close")
+  }}</v-btn>
         <v-spacer></v-spacer>
-        <v-btn
-          color="success"
-          variant="tonal"
-          @click="send"
-          :disabled="!valid"
-          :loading="loading"
-        >
+        <v-btn color="success" variant="tonal" @click="send" :disabled="!valid" :loading="loading">
           {{ $t("sendMessage.send") }}
         </v-btn>
       </v-card-actions>
@@ -173,8 +132,10 @@ export default {
     valid: false,
     loading: false,
     loadingContacts: false,
+    loadingGroups: false, // Linha adicionada
     error: false,
     contacts: [],
+    groups: [], // Linha adicionada
     numbers: [],
     search: "",
     success: false,
@@ -220,13 +181,15 @@ export default {
         this.loading = false;
       }
     },
+
     open(obj) {
       this.message = defaultMessage(obj);
       this.dialog = true;
       if (!this.contacts.length) {
-        this.loadContacts();
+        this.loadGroups();
       }
     },
+
     addAndSelect() {
       this.contacts.push({
         title: this.search,
@@ -238,45 +201,43 @@ export default {
         this.message.number = this.search;
       });
     },
-    async loadContacts() {
-      try {
-        this.loadingContacts = true;
-        this.error = false;
-        const contacts = await instanceController.chat.getContacts(
-          this.instance.instance.instanceName
-        );
-        const groups = await instanceController.group.getAll(
-          this.instance.instance.instanceName
-        );
 
-        const groupsPhotos = {};
+    // METODO PARA LISTAGEM DE GRUPOS:
+async loadGroups() {
+  try {
+    this.loadingGroups = true; // Define loadingGroups para true antes de carregar os grupos
+    this.error = false;
 
-        this.contacts = [
-          ...contacts
-            .filter((c) => {
-              const isGroup = c.id.indexOf("g.us") !== -1;
-              if (isGroup) groupsPhotos[c.id] = c.profilePictureUrl;
-              return !isGroup;
-            })
-            .map((c) => ({
-              title: c.pushName || c.id,
-              value: c.id,
-              photo: c.profilePictureUrl,
-              isGroup: false,
-            })),
-          ...groups.map((g) => ({
-            title: g.subject,
-            value: g.id,
-            photo: groupsPhotos[g.id],
-            isGroup: true,
-          })),
-        ];
-      } catch (e) {
-        this.error = e.message?.message || e.message || e;
-      } finally {
-        this.loadingContacts = false;
-      }
+    const groups = await instanceController.group.getAll(
+      this.instance.instance.instanceName
+    ).then(groups => groups.filter(g => g.announce === false)
+    );
+
+    const groupsPhotos = {};
+
+    // Mapeia os grupos filtrados para o formato desejado
+    this.groups = groups.map((g) => {
+      groupsPhotos[g.id] = g.profilePictureUrl;
+      return {
+        title: g.subject,
+        value: g.id,
+        photo: groupsPhotos[g.id],
+        isGroup: true,
+      };
+    });
+  } catch (error) {
+    console.error('Erro ao carregar grupos:', error);
+    this.error = true;
+  } finally {
+    this.loadingGroups = false; // Define loadingGroups para false após o término do carregamento ou em caso de erro
+  }
+},
+
+    // Método para selecionar todos os grupos:
+    selectAll() {
+      this.numbers = this.groups.map(group => group.value);
     },
+
   },
   mounted() {
     window.addEventListener("send-message", (e) => {
